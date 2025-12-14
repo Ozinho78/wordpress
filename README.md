@@ -32,7 +32,8 @@ This repository contains a Docker Compose configuration for running WordPress wi
 
 # 1. Clone or copy the repository to your VPS
 ```bash
-cd /path/to/project
+git clone -b feature/wordpress-docker-setup git@github.com:Ozinho78/wordpress.git
+cd wordpress
 ```
 
 # 2. Create environment file and set passwords
