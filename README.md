@@ -11,7 +11,6 @@ Docker-based WordPress installation with MySQL database for VPS deployment.
   - [Installation Steps](#installation-steps)
   - [Configuration](#configuration)
   - [Managing the Application](#managing-the-application)
-  - [Customization](#customization)
 - [Project Structure](#project-structure)
 
 ## Description
@@ -48,7 +47,7 @@ docker compose up -d
 ```
 
 # 4. Access WordPress
-# Open browser: http://YOUR_VPS_IP:8080
+# Open browser: http://<YOUR_VPS_IP>:8080
 
 
 WordPress will be available on port 8080. Complete the installation through the web interface.
@@ -178,7 +177,7 @@ You should see both `wordpress_app` and `wordpress_db` containers in "Up" status
 Open your browser and navigate to:
 
 ```
-http://YOUR_VPS_IP:8080
+http://<YOUR_VPS_IP>:8080
 ```
 
 Replace `YOUR_VPS_IP` with your actual VPS IP address.
@@ -306,104 +305,6 @@ docker compose pull
 docker compose up -d
 ```
 
-### Customization
-
-#### Add Plugins and Themes
-
-Once WordPress is running, you can install plugins and themes through the WordPress admin interface at:
-
-```
-http://YOUR_VPS_IP:8080/wp-admin
-```
-
-Alternatively, you can copy them directly into the volume:
-
-# Find the volume mount point
-```bash
-docker volume inspect wordpress-docker_wordpress_data
-```
-
-# Copy files to the volume
-```bash
-docker cp my-plugin.zip wordpress_app:/var/www/html/wp-content/plugins/
-```
-
-#### Custom PHP Configuration
-
-Create a custom PHP configuration file and mount it:
-
-1. Create `custom-php.ini`:
-```ini
-upload_max_filesize = 64M
-post_max_size = 64M
-memory_limit = 256M
-```
-
-2. Add to `docker-compose.yaml` under wordpress volumes:
-```yaml
-volumes:
-  - wordpress_data:/var/www/html
-  - ./custom-php.ini:/usr/local/etc/php/conf.d/custom.ini
-```
-
-3. Restart:
-```bash
-docker compose down
-docker compose up -d
-```
-
-#### Using with Nginx Reverse Proxy
-
-If you have Nginx already running on your VPS (e.g., for another web shop), you can configure it as a reverse proxy:
-
-Create `/etc/nginx/sites-available/wordpress`:
-
-```nginx
-server {
-    listen 80;
-    server_name wordpress.yourdomain.com;
-
-    location / {
-        proxy_pass http://localhost:8080;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-```
-
-Enable the site:
-```bash
-sudo ln -s /etc/nginx/sites-available/wordpress /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
-```
-
-Now WordPress will be accessible via your domain name.
-
-#### Backup Your Data
-
-**Backup Database:**
-```bash
-docker compose exec db mysqldump -u${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} > backup.sql
-```
-
-**Backup WordPress Files:**
-```bash
-docker run --rm -v wordpress-docker_wordpress_data:/data -v $(pwd):/backup alpine tar czf /backup/wordpress-backup.tar.gz -C /data .
-```
-
-**Restore Database:**
-```bash
-cat backup.sql | docker compose exec -T db mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DATABASE}
-```
-
-**Restore WordPress Files:**
-```bash
-docker run --rm -v wordpress-docker_wordpress_data:/data -v $(pwd):/backup alpine tar xzf /backup/wordpress-backup.tar.gz -C /data
-```
-
 ## Project Structure
 
 ```
@@ -411,8 +312,8 @@ wordpress-docker/
 ├── docker-compose.yaml    # Main Docker Compose configuration
 ├── .env                   # Environment variables (create from .env.example)
 ├── .env.example           # Template for environment variables
-├── .gitignore            # Git ignore rules
-└── README.md             # This file
+├── .gitignore             # Git ignore rules
+└── README.md              # This file
 ```
 
 **Files to commit to git:**
@@ -437,21 +338,6 @@ docker compose logs
 # Check if port 8080 is already in use
 ```bash
 sudo netstat -tulpn | grep 8080
-```
-
-**Can't connect to WordPress:**
-- Verify containers are running: `docker compose ps`
-- Check firewall: `sudo ufw status`
-- Allow port if needed: `sudo ufw allow 8080`
-
-**Database connection error:**
-- Verify passwords in `.env` match
-- Check database container is running: `docker compose ps`
-
-**Out of disk space:**
-# Check disk usage
-```bash
-df -h
 ```
 
 # Clean up unused Docker resources
