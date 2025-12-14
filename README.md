@@ -29,20 +29,26 @@ This repository contains a Docker Compose configuration for running WordPress wi
 
 **If you already have Docker and Docker Compose installed:**
 
-```bash
+
 # 1. Clone or copy the repository to your VPS
+```bash
 cd /path/to/project
+```
 
 # 2. Create environment file and set passwords
+```bash
 cp .env.example .env
 nano .env  # Edit and set your passwords
+```
 
 # 3. Start WordPress
+```bash
 docker compose up -d
+```
 
 # 4. Access WordPress
 # Open browser: http://YOUR_VPS_IP:8080
-```
+
 
 WordPress will be available on port 8080. Complete the installation through the web interface.
 
@@ -63,20 +69,29 @@ Your VPS needs:
 
 If Docker is not installed on your VPS:
 
-```bash
+
 # Update package index
+```bash
 sudo apt update
+```
 
 # Install Docker
+```bash
 sudo apt install -y docker.io
+```
 
 # Install Docker Compose plugin
+```bash
 sudo apt install -y docker-compose-plugin
+```
 
 # Add your user to the docker group
+```bash
 sudo usermod -aG docker $USER
+```
 
 # Logout and login again for group changes to take effect
+```bash
 exit
 ```
 
@@ -91,16 +106,19 @@ docker compose version
 
 Copy the project files to your VPS. You can use `git clone`, `scp`, or any other method:
 
-```bash
+
 # Example with git
+```bash
 git clone <repository-url>
 cd <repository-directory>
+```
 
 # Or create directory and copy files manually
+```bash
 mkdir wordpress-docker
 cd wordpress-docker
-# Copy docker-compose.yaml, .env.example, .gitignore here
 ```
+# Copy docker-compose.yaml, .env.example, .gitignore here
 
 #### Step 3: Configure Environment Variables
 
@@ -225,14 +243,19 @@ Restart containers to apply changes.
 
 To see what's happening in the containers:
 
-```bash
+
 # All logs
+```bash
 docker compose logs
+```
 
 # Follow logs in real-time
+```bash
 docker compose logs -f
+```
 
 # Logs for specific service
+```bash
 docker compose logs wordpress
 docker compose logs db
 ```
@@ -294,11 +317,13 @@ http://YOUR_VPS_IP:8080/wp-admin
 
 Alternatively, you can copy them directly into the volume:
 
-```bash
 # Find the volume mount point
+```bash
 docker volume inspect wordpress-docker_wordpress_data
+```
 
 # Copy files to the volume
+```bash
 docker cp my-plugin.zip wordpress_app:/var/www/html/wp-content/plugins/
 ```
 
@@ -403,11 +428,13 @@ wordpress-docker/
 ## Troubleshooting
 
 **Containers won't start:**
-```bash
 # Check logs
+```bash
 docker compose logs
+```
 
 # Check if port 8080 is already in use
+```bash
 sudo netstat -tulpn | grep 8080
 ```
 
@@ -421,11 +448,13 @@ sudo netstat -tulpn | grep 8080
 - Check database container is running: `docker compose ps`
 
 **Out of disk space:**
-```bash
 # Check disk usage
+```bash
 df -h
+```
 
 # Clean up unused Docker resources
+```bash
 docker system prune
 ```
 
