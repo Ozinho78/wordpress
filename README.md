@@ -29,26 +29,27 @@ This repository contains a Docker Compose configuration for running WordPress wi
 **If you already have Docker and Docker Compose installed:**
 
 
-# 1. Clone or copy the repository to your VPS
+## 1. Clone or copy the repository to your VPS
 ```bash
 git clone -b feature/wordpress-docker-setup git@github.com:Ozinho78/wordpress.git
 cd wordpress
 ```
 
-# 2. Create environment file and set passwords
+## 2. Create environment file and set passwords
 ```bash
 cp .env.example .env
 nano .env  # Edit and set your passwords
 ```
 
-# 3. Start WordPress
+## 3. Start WordPress
 ```bash
 docker compose up -d
 ```
 
-# 4. Access WordPress
-# Open browser: http://<YOUR_VPS_IP>:8080
-
+## 4. Access WordPress
+```bash
+http://<YOUR_VPS_IP>:8080
+```
 
 WordPress will be available on port 8080. Complete the installation through the web interface.
 
@@ -63,34 +64,34 @@ Your VPS needs:
 - Port 8080 available
 - Internet connection
 
-### Installation Steps
+## Installation Steps
 
-#### Step 1: Install Docker
+### Step 1: Install Docker
 
 If Docker is not installed on your VPS:
 
 
-# Update package index
+### Update package index
 ```bash
 sudo apt update
 ```
 
-# Install Docker
+### Install Docker
 ```bash
 sudo apt install -y docker.io
 ```
 
-# Install Docker Compose plugin
+### Install Docker Compose plugin
 ```bash
 sudo apt install -y docker-compose-plugin
 ```
 
-# Add your user to the docker group
+### Add your user to the docker group
 ```bash
 sudo usermod -aG docker $USER
 ```
 
-# Logout and login again for group changes to take effect
+### Logout and login again for group changes to take effect
 ```bash
 exit
 ```
@@ -102,34 +103,32 @@ docker --version
 docker compose version
 ```
 
-#### Step 2: Prepare Project Files
+### Step 2: Prepare Project Files
 
 Copy the project files to your VPS. You can use `git clone`, `scp`, or any other method:
 
 
-# Example with git
+### Example with git
 ```bash
 git clone <repository-url>
 cd <repository-directory>
 ```
 
-# Or create directory and copy files manually
+### Or create directory and copy files manually
 ```bash
 mkdir wordpress-docker
 cd wordpress-docker
 ```
-# Copy docker-compose.yaml, .env.example, .gitignore here
+#### Copy docker-compose.yaml, .env.example, .gitignore here
 
-#### Step 3: Configure Environment Variables
+### Step 3: Configure Environment Variables
 
-Create your `.env` file from the example:
-
+### Create your `.env` file from the example:
 ```bash
 cp .env.example .env
 ```
 
-Edit the `.env` file and set secure passwords:
-
+### Edit the `.env` file and set secure passwords:
 ```bash
 nano .env
 ```
@@ -151,10 +150,9 @@ WORDPRESS_DEBUG=0
 
 **Important**: Use strong, unique passwords. Never commit the `.env` file to git.
 
-#### Step 4: Deploy WordPress
+### Step 4: Deploy WordPress
 
-Start the Docker containers:
-
+### Start the Docker containers:
 ```bash
 docker compose up -d
 ```
@@ -164,19 +162,17 @@ This command will:
 - Create the network and volumes
 - Start both containers in the background
 
-Check if containers are running:
-
+### Check if containers are running:
 ```bash
 docker compose ps
 ```
 
 You should see both `wordpress_app` and `wordpress_db` containers in "Up" status.
 
-#### Step 5: Access WordPress
+### Step 5: Access WordPress
 
 Open your browser and navigate to:
-
-```
+```bash
 http://<YOUR_VPS_IP>:8080
 ```
 
@@ -190,10 +186,9 @@ Follow the WordPress installation wizard:
 
 ### Configuration
 
-#### Changing the Port
+### Changing the Port
 
 To use a different port than 8080, edit `docker-compose.yaml`:
-
 ```yaml
 wordpress:
   ports:
@@ -206,10 +201,9 @@ docker compose down
 docker compose up -d
 ```
 
-#### Database Configuration
+### Database Configuration
 
 You can modify database settings in the `.env` file:
-
 ```env
 # Change database name
 MYSQL_DATABASE=my_custom_db
@@ -239,48 +233,44 @@ Restart containers to apply changes.
 
 ### Managing the Application
 
-#### View Logs
+### View Logs
 
 To see what's happening in the containers:
 
-
-# All logs
+### All logs
 ```bash
 docker compose logs
 ```
 
-# Follow logs in real-time
+### Follow logs in real-time
 ```bash
 docker compose logs -f
 ```
 
-# Logs for specific service
+### Logs for specific service
 ```bash
 docker compose logs wordpress
 docker compose logs db
 ```
 
-#### Stop WordPress
-
+### Stop WordPress
 ```bash
 docker compose stop
 ```
 
 This stops the containers but preserves all data.
 
-#### Start Stopped Containers
-
+### Start Stopped Containers
 ```bash
 docker compose start
 ```
 
-#### Restart Containers
-
+### Restart Containers
 ```bash
 docker compose restart
 ```
 
-#### Stop and Remove Containers
+### Stop and Remove Containers
 
 ```bash
 docker compose down
@@ -288,7 +278,7 @@ docker compose down
 
 This removes containers but **keeps your data** in volumes.
 
-#### Remove Everything Including Data
+### Remove Everything Including Data
 
 **Warning**: This deletes all WordPress content and database data.
 
@@ -330,22 +320,22 @@ wordpress-docker/
 ## Troubleshooting
 
 **Containers won't start:**
-# Check logs
+### Check logs
 ```bash
 docker compose logs
 ```
 
-# Check if port 8080 is already in use
+### Check if port 8080 is already in use
 ```bash
 sudo netstat -tulpn | grep 8080
 ```
 
-# Clean up unused Docker resources
+### Clean up unused Docker resources
 ```bash
 docker system prune
 ```
 
-For more help, check the logs:
+### For more help, check the logs:
 ```bash
 docker compose logs -f
 ```
