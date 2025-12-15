@@ -1,6 +1,12 @@
 # WordPress Docker Setup
 
-Docker-based WordPress installation with MySQL database for VPS deployment.
+## Description
+
+This repository contains a Docker Compose configuration for running WordPress with MySQL on a VPS. The setup includes:
+
+- **WordPress Service**: WordPress image running on Apache
+- **Purpose**: Provide a simple, reproducible WordPress deployment that can be quickly set up on any VPS with Docker installed.
+
 
 ## Table of Contents
 
@@ -13,20 +19,10 @@ Docker-based WordPress installation with MySQL database for VPS deployment.
   - [Managing the Application](#managing-the-application)
 - [Project Structure](#project-structure)
 
-## Description
-
-This repository contains a Docker Compose configuration for running WordPress with MySQL on a VPS. The setup includes:
-
-- **WordPress Service**: Latest WordPress image running on Apache
-- **MySQL Database**: MySQL 8.0 for data storage
-- **Persistent Storage**: Docker volumes for database and WordPress files
-- **Network Isolation**: Custom Docker network for service communication
-
-**Purpose**: Provide a simple, reproducible WordPress deployment that can be quickly set up on any VPS with Docker installed.
-
 ## Quickstart
 
-**If you already have Docker and Docker Compose installed:**
+### Prerequisites:
+You have already Docker and Docker Compose installed.
 
 
 ## 1. Clone or copy the repository to your VPS
@@ -38,8 +34,10 @@ cd wordpress
 ## 2. Create environment file and set passwords
 ```bash
 cp .env.example .env
-nano .env  # Edit and set your passwords
+nano .env
 ```
+> [!IMPORTANT]  
+> Edit and set your passwords
 
 ## 3. Start WordPress
 ```bash
