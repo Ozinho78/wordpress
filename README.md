@@ -36,6 +36,7 @@ cd wordpress
 cp .env.example .env
 nano .env
 ```
+
 > [!IMPORTANT]  
 > Edit and set your passwords
 
