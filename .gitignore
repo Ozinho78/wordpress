@@ -26,6 +26,7 @@ id_rsa
 # Test
 test/
 
+checklist.pdf
 checklist_unmarked.md
 checklist_marked.md
 PROJEKT_UEBERSICHT.txt
