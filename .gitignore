@@ -1,0 +1,28 @@
+# Environment variables
+.env
+.env.local
+
+# Docker override
+docker-compose.override.yml
+
+# Logs
+*.log
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Temporary files
+tmp/
+temp/
+
+# Sensitive files
+*.pem
+*.key
+id_rsa
+
+# Test
+test/
+
