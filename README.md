@@ -1,7 +1,5 @@
 # WordPress Docker Setup
 
-## Description
-
 This repository contains a Docker Compose configuration for running WordPress with MySQL on a VPS. The setup includes:
 
 - **WordPress Service**: WordPress image running on Apache
@@ -38,7 +36,18 @@ nano .env
 ```
 
 > [!IMPORTANT]  
-> Edit and set your passwords
+> **Set secure passwords for these required variables:**
+> 
+> - `MYSQL_ROOT_PASSWORD`: MySQL root password (min. 16 characters)
+> - `MYSQL_PASSWORD`: WordPress database user password (min. 16 characters)
+> 
+> Use strong, unique passwords with mixed case, numbers, and special characters.
+> 
+> **Example:**
+> ```env
+> MYSQL_ROOT_PASSWORD=X9$kL2#mP8qR4vN7wZ3@hG5jB6
+> MYSQL_PASSWORD=Q4#nC8$tY2pL9wM6@rD3xF7vH5
+> ```
 
 ## 3. Start WordPress
 ```bash
